@@ -6,22 +6,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Hotel_Booking.Models;
+using Hotel_Booking.Components.Data;
+using Hotel_Booking.Components.Serialization;
+using Microsoft.AspNetCore.Hosting;
+using Hotel_Booking.Components.IO;
 
 namespace Hotel_Booking.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            List<Hotel> Hotels = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch());
+            return View(Hotels);
         }
+
 
         public IActionResult Privacy()
         {
