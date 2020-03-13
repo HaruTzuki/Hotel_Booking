@@ -5,8 +5,14 @@ using System.Threading.Tasks;
 
 namespace Hotel_Booking.Models
 {
+    /// <summary>
+    /// Hotel Class. Keeping your hotel information
+    /// </summary>
     public class Hotel
     {
+        /// <summary>
+        /// Name of your Hotel.
+        /// </summary>
         private string _Name = "";
         public string Name
         {
@@ -22,6 +28,10 @@ namespace Hotel_Booking.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// Description of your Hotel.
+        /// </summary>
         private string _Description = "";
         public string Description
         {
@@ -37,6 +47,10 @@ namespace Hotel_Booking.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// Cost per day of your Hotel.
+        /// </summary>
         private double _Price = 0;
         public double Price
         {
@@ -52,6 +66,10 @@ namespace Hotel_Booking.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// Image path of your Hotel.
+        /// </summary>
         private string _Image = "";
         public string Image
         {
@@ -67,6 +85,10 @@ namespace Hotel_Booking.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// Address of your Hotel.
+        /// </summary>
         private string _Address = "";
         public string Address
         {
@@ -82,6 +104,10 @@ namespace Hotel_Booking.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// How much available Rooms have our Hotel.
+        /// </summary>
         private int _AvailableRooms = 0;
         public int AvailableRooms
         {

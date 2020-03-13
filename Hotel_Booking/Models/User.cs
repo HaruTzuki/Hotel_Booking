@@ -5,8 +5,14 @@ using System.Threading.Tasks;
 
 namespace Hotel_Booking.Models
 {
+    /// <summary>
+    /// User Class. Keeps User information.
+    /// </summary>
     public class User
     {
+        /// <summary>
+        /// First Name of your User.
+        /// </summary>
         private string _FirstName = "";
         public string FirstName
         {
@@ -22,6 +28,10 @@ namespace Hotel_Booking.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// Last Name of your User.
+        /// </summary>
         private string _LastName = "";
         public string LastName
         {
@@ -37,6 +47,10 @@ namespace Hotel_Booking.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// Address of your User.
+        /// </summary>
         private string _Address = "";
         public string Address
         {
@@ -52,6 +66,10 @@ namespace Hotel_Booking.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// E-Mail of your User.
+        /// </summary>
         private string _Email = "";
         public string Email
         {
@@ -67,6 +85,10 @@ namespace Hotel_Booking.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// Phone of your User.
+        /// </summary>
         private string _Phone = "";
         public string Phone
         {
