@@ -5,53 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Assets\Content\ananti_city_resort_img.jpg" />
-    <Content Include="Assets\Content\evia_hotel_suites_img.jpg" />
-    <Content Include="Assets\Content\hotel_nefeli_img.jpg" />
-    <Content Include="Assets\Content\hotel_perrakis_img.jpg" />
-    <Content Include="Assets\Content\nomads_meteora_img.jpg" />
-    <Content Include="Assets\Content\palm_beach_img.jpg" />
-    <Content Include="Assets\Content\porto_kalamaki_img.jpg" />
-    <Content Include="Assets\Content\studios_alkioni_img.jpg" />
-    <Content Include="Assets\Content\themisto_img.jpg" />
-    <Content Include="Assets\Content\vyzantio_img.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\Content\ananti_city_resort_img.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Content\evia_hotel_suites_img.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Content\hotel_nefeli_img.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Content\hotel_perrakis_img.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Content\nomads_meteora_img.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Content\palm_beach_img.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Content\porto_kalamaki_img.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Content\studios_alkioni_img.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Content\themisto_img.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Content\vyzantio_img.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Folder Include="wwwroot\content\data\" />
   </ItemGroup>
 
 

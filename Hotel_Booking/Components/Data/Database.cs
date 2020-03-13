@@ -12,7 +12,7 @@ namespace Hotel_Booking.Components.Data
         public static string Fetch()
         {
             string mRet = "";
-            using (StreamReader _SR = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Data", "hotel_db.json")))
+            using (StreamReader _SR = new StreamReader(Path.Combine("Context", "hotel_db.json")))
             {
                 mRet = _SR.ReadToEnd();
             }

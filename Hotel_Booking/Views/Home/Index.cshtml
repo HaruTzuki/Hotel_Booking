@@ -3,12 +3,53 @@
 }
 @model List<Hotel>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
-@foreach(var element in Model)
+@foreach(var Hotel in Model)
 {
-    <p>@element.Name</p>
+
+    <div class="card mb-2">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-5">
+                    <div>
+                        <img src="@Hotel.Image" alt="@Hotel.Name" style="max-width: 100%" />
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="row row-custom">
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h2>@Hotel.Name</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p>@Hotel.Address</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Περιγραφή:</h4>
+                                    @if(Hotel.Description.Length > 0)
+                                    {
+                                        <p ><a asp-controller="Hotel" asp-action="Information" asp-route-id="@Hotel.Oid" class="text-dark">@Hotel.Description.Substring(0, 100) <span class="text-primary font-italic">Περισσότερα...</span> </a></p>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <span class="font-weight-bold">Διαθέσιμα Δωμάτια: </span> @Hotel.AvailableRooms
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 d-flex flex-column align-items-end justify-content-end">
+                            <span>Τιμή: </span>
+                            <h1>@Hotel.Price€</h1>
+                            <a asp-controller="Booking" asp-action="Order" asp-route-id="@Hotel.Oid" class="btn btn-info text-light">Κάνε Κράτηση</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
