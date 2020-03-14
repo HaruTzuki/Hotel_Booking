@@ -20,7 +20,7 @@ namespace Hotel_Booking.Controllers
 
             // Taking Hotel
             _Booking.Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x=>x.Oid == Id).FirstOrDefault();
-
+            ViewData["Url"] = $"{this.Request.Scheme}://{this.Request.Host}";
 
             return View(_Booking);
         }

@@ -70,7 +70,7 @@ namespace Hotel_Booking.Models
         /// <summary>
         /// How much Rooms want to rent our User.
         /// </summary>
-        private int _Rooms = 0;
+        private int _Rooms = 1;
         public int Rooms
         {
             get
