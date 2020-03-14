@@ -1,0 +1,8 @@
+﻿@{
+    ViewData["Title"] = "Booking Completed";
+}
+@model Booking
+
+    <p>Thanks very much for your booking Mr / Ms @Model.User.LastName</p>
+    <p>Your booking ID is: @Model.Oid</p>
+    <p>In your e-mail (@Model.User.Email) you will find more information about your booking</p>

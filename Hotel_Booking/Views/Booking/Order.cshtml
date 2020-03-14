@@ -1,64 +1,65 @@
 ﻿@{
 	ViewData["Title"] = "Booking";
 }
-@model Booking
-	<form>
+@model Hotel
+	<form asp-controller="Booking" asp-action="CompleteOrder" method="post">
 		<div class="card m-2">
 			<div class="card-body">
 				<div class="row">
 					<div class="col-sm-5">
 						<h2>Έχετε επιλέξει:</h2>
 						<hr />
-						<img src=" @(ViewData["Url"] + "/" + Model.Hotel.Image)" alt="@Model.Hotel.Name" class="w-100 rounded" />
+						<img src=" @(ViewData["Url"] + "/" + Model.Image)" alt="@Model.Name" class="w-100 rounded" />
 						<hr />
-						<h4>@Model.Hotel.Name</h4>
-						<h6>@Model.Hotel.Address</h6>
-                        <h6><span id="HotelPrice">@Model.Hotel.Price</span>€ / Νύχτα</h6>
+                        <input type="hidden" value="@Model.Oid" name="Booking.HotelOid" id="HotelOid"/>
+						<h4>@Model.Name</h4>
+						<h6>@Model.Address</h6>
+                        <h6><span id="HotelPrice">@Model.Price</span>€ / Νύχτα</h6>
 						<hr />
 						<div class="form-group">
 							<label for="FromDate">Από:</label>
-							<input type="date" name="FromDate" id="FromDate" class="form-control" value="@Model.FromDate.ToString("yyyy-MM-dd")"/>
+							<input type="date" name="Booking.FromDate" id="FromDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
 						</div>
 						<div class="form-group">
 							<label for="ToDate">Έως:</label>
-							<input type="date" name="ToDate" id="ToDate" class="form-control" value="@Model.ToDate.ToString("yyyy-MM-dd")"/>
+							<input type="date" name="Booking.ToDate" id="ToDate" class="form-control" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")"/>
 						</div>
 						<div class="form-group">
 							<label for="Rooms">Δωμάτια:</label>
-							<input type="number" min="1" max="@Model.Hotel.AvailableRooms" name="Rooms" id="Rooms" class="form-control" value="1"/>
+							<input type="number" min="1" max="@Model.AvailableRooms" name="Booking.Rooms" id="Rooms" class="form-control" value="1"/>
 						</div>
 					</div>
 					<div class="col-sm-7">
 						<h2>Τα στοιχεία σας:</h2>
 						<hr />
-						<div class="d-flex mb-1">
-							<button class="btn btn-info mr-1" type="submit">Ολοκλήρωση Κράτησης</button>
-							<button class="btn btn-danger mr-1" type="reset">Ακύρωση</button>
-						</div>
-						<hr />
 						<div class="form-group">
 							<label for="FirstName">Όνομα: <span class="text-danger">*</span></label>
-							<input type="text" name="FirstName" id="FirstName" placeholder="Your First Name..." class="form-control" required />
+							<input type="text" name="Booking.User.FirstName" id="FirstName" placeholder="Your First Name..." class="form-control" required />
 						</div>
 						<div class="form-group">
 							<label for="LastName">Επώνυμο: <span class="text-danger">*</span></label>
-							<input type="text" name="LastName" id="LastName" placeholder="Your Last Name..." class="form-control" required />
+							<input type="text" name="Booking.User.LastName" id="LastName" placeholder="Your Last Name..." class="form-control" required />
 						</div>
 						<div class="form-group">
 							<label for="Address">Διεύθυνση:</label>
-							<input type="text" name="Address" id="Address" placeholder="Your Address..." class="form-control" />
+							<input type="text" name="Booking.User.Address" id="Address" placeholder="Your Address..." class="form-control" />
 						</div>
 						<div class="form-group">
 							<label for="Email">Ηλ. Διεύθυνση: <span class="text-danger">*</span></label>
-							<input type="email" name="Email" id="Email" placeholder="Your E-Mail Address..." class="form-control" required />
+							<input type="email" name="Booking.User.Email" id="Email" placeholder="Your E-Mail Address..." class="form-control" required />
 						</div>
 						<div class="form-group">
 							<label for="Phone">Τηλέφωνο:</label>
-							<input type="text" name="Phone" id="Phone" placeholder="Your Phone..." class="form-control" required />
+							<input type="text" name="Booking.User.Phone" id="Phone" placeholder="Your Phone..." class="form-control" />
 						</div>
-                        <div class="d-flex justify-content-end align-items-center">
+						<div class="d-flex justify-content-end align-items-center">
 							<span class="mr-2">Τελική Τιμή:</span>
-							<h4 id="Cost">@(string.Format("{0:N2}", Model.Hotel.Price * (Model.ToDate - Model.FromDate).TotalDays * Model.Rooms)) €</h4>
+							<h4 id="Cost">@(string.Format("{0:N2}", Model.Price)) €</h4>
+						</div>
+                        <hr />
+						<div class="d-flex justify-content-end mb-1">
+							<button class="btn btn-info mr-1" type="submit">Ολοκλήρωση Κράτησης</button>
+							<button class="btn btn-danger mr-1" type="reset">Ακύρωση</button>
 						</div>
 					</div>
 				</div>

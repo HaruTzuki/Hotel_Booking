@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\Common\" />
     <Folder Include="wwwroot\content\data\" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,12 +9,14 @@ namespace Hotel_Booking.Models
     /// <summary>
     /// User Class. Keeps User information.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class User
     {
         /// <summary>
         /// First Name of your User.
         /// </summary>
         private string _FirstName = "";
+        [JsonProperty("first_name")]
         public string FirstName
         {
             get
@@ -33,6 +36,7 @@ namespace Hotel_Booking.Models
         /// Last Name of your User.
         /// </summary>
         private string _LastName = "";
+        [JsonProperty("last_name")]
         public string LastName
         {
             get
@@ -52,6 +56,7 @@ namespace Hotel_Booking.Models
         /// Address of your User.
         /// </summary>
         private string _Address = "";
+        [JsonProperty("address")]
         public string Address
         {
             get
@@ -71,6 +76,7 @@ namespace Hotel_Booking.Models
         /// E-Mail of your User.
         /// </summary>
         private string _Email = "";
+        [JsonProperty("email")]
         public string Email
         {
             get
@@ -90,6 +96,7 @@ namespace Hotel_Booking.Models
         /// Phone of your User.
         /// </summary>
         private string _Phone = "";
+        [JsonProperty("phone")]
         public string Phone
         {
             get

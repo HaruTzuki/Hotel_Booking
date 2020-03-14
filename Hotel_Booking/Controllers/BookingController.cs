@@ -16,13 +16,33 @@ namespace Hotel_Booking.Controllers
         // GET: /<controller>/
         public IActionResult Order(Guid Id)
         {
-            Booking _Booking = new Booking();
+            Hotel _Hotel = new Hotel();
 
             // Taking Hotel
-            _Booking.Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x=>x.Oid == Id).FirstOrDefault();
+            _Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x=>x.Oid == Id).FirstOrDefault();
             ViewData["Url"] = $"{this.Request.Scheme}://{this.Request.Host}";
 
-            return View(_Booking);
+            return View(_Hotel);
+        }
+
+        [HttpPost()]
+        public IActionResult CompleteOrder(Booking Booking)
+        {
+            // Save to Json File
+            List<Booking> Bookings;
+            // Taking Hotel Object
+            Booking.Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x => x.Oid == Booking.HotelOid).FirstOrDefault();
+
+            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
+
+            if (Bookings is null)
+                Bookings = new List<Booking>();
+
+            Bookings.Add(Booking);
+
+            Database.CommitBookings(JsonSerialize.JsonObjectSerialize(Bookings));
+
+            return View("BookingComplete", Booking);
         }
     }
 }
