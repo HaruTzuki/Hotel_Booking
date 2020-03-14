@@ -13,16 +13,23 @@ namespace Hotel_Booking.Controllers
 {
     public class BookingController : Controller
     {
-        // GET: /<controller>/
         public IActionResult Order(Guid Id)
         {
-            Hotel _Hotel = new Hotel();
+            ViewData["Url"] = $"{this.Request.Scheme}://{this.Request.Host}";
+            Hotel Hotel = new Hotel();
+            List<Booking> Bookings = new List<Booking>();
 
             // Taking Hotel
-            _Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x=>x.Oid == Id).FirstOrDefault();
-            ViewData["Url"] = $"{this.Request.Scheme}://{this.Request.Host}";
+            Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x=>x.Oid == Id).FirstOrDefault();
+            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings()).Where(x=>x.HotelOid == Id).ToList();
 
-            return View(_Hotel);
+            if (Bookings is null)
+                Bookings = new List<Booking>();
+
+
+            Hotel.AvailableRooms -= Bookings.Select(x => x.Rooms).Sum();
+
+            return View(Hotel);
         }
 
         [HttpPost()]
@@ -43,6 +50,17 @@ namespace Hotel_Booking.Controllers
             Database.CommitBookings(JsonSerialize.JsonObjectSerialize(Bookings));
 
             return View("BookingComplete", Booking);
+        }
+
+        [HttpPost()]
+        public IActionResult DeleteBooking(string BookingId)
+        {
+            List<Booking> Bookings = new List<Booking>();
+            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
+            Bookings.Remove(Bookings.Where(x => x.Oid == BookingId).FirstOrDefault());
+            Database.CommitBookings(JsonSerialize.JsonObjectSerialize(Bookings));
+
+            return RedirectToAction("Bookings", "Home");
         }
     }
 }

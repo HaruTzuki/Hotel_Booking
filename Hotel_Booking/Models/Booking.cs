@@ -139,7 +139,7 @@ namespace Hotel_Booking.Models
         {
             get
             {
-                return this._BookingCost; // = this._Hotel.Price * (this._ToDate - this._FromDate).TotalDays * this._Rooms;
+                return this._BookingCost = this._Hotel.Price * (this._ToDate - this._FromDate).TotalDays * this._Rooms;
             }
             set
             {

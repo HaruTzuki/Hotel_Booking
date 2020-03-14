@@ -22,14 +22,40 @@ namespace Hotel_Booking.Controllers
 
         public IActionResult Index()
         {
-            List<Hotel> Hotels = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch());
-            return View(Hotels);
+            List<Hotel> Hotels = new List<Hotel>();
+            List<Booking> Bookings = new List<Booking>();
+
+            Hotels = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch());
+            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
+
+            if (Hotels is null)
+                Hotels = new List<Hotel>();
+
+            if (Bookings is null)
+                Bookings = new List<Booking>();
+
+            Hotels.ForEach(h => h.AvailableRooms -= Bookings.Where(b => b.HotelOid == h.Oid).Select(b => b.Rooms).Sum());
+           
+            return View(Hotels.Where(h=>h.AvailableRooms > 0).ToList());
         }
 
 
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Bookings()
+        {
+            List<Booking> Bookings = new List<Booking>();
+
+            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
+
+            Bookings.ForEach(x => x.Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(y => y.Oid == x.HotelOid).FirstOrDefault());
+
+            ViewData["Url"] = $"{this.Request.Scheme}://{this.Request.Host}";
+
+            return View(Bookings);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
