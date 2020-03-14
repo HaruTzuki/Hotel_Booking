@@ -15,7 +15,7 @@ namespace Hotel_Booking.Components.Serialization
 
         public static string JsonObjectSerialize(object? Obj)
         {
-            return JsonConvert.SerializeObject(Obj);
+            return JsonConvert.SerializeObject(Obj, Formatting.Indented);
         }
     }
 }
