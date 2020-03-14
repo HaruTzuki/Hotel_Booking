@@ -26,6 +26,8 @@ namespace Hotel_Booking
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            // Compile razor pages in running time.
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
