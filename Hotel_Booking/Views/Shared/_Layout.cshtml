@@ -4,8 +4,9 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Hotel Booking Site.">
+    <meta name="author" content="Vlachopoulos Dimitrios">
+    <meta name="keywords" content="hotels, hotel, booking, ξενοδοχείο, κρατήσεις">
 
     <title>@ViewData["Title"]</title>
 
@@ -25,41 +26,51 @@
     <!-- Custom styles for this template -->
     <link href="~/css/one-page-wonder.min.css" rel="stylesheet">
     <link href="~/css/site.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/content/img/favicon.ico"/>
     
 
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Hotel Booking</a>
+            <a class="navbar-brand" href="@ViewData["Url"]"><img src="~/content/img/hotel_booking_logo.png" alt="logo" /> Hotel Booking</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Index">Browse</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Index"><i class='bx bx-search-alt bx-tada-hover'></i> Browse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Bookings">Bookings</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Bookings"><i class='bx bx-book-bookmark bx-tada-hover'></i> Bookings</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <header class="masthead text-center text-white">
+
+
+    <header class="masthead text-center text-white" style="background-image: url('/content/img/banner.jpg'); background-size: cover">
         <div class="masthead-content">
             <div class="container">
-                <h1 class="masthead-heading mb-0">Hotel Booking</h1>
-                <h2 class="masthead-subheading mb-0">Find the perfect hotel</h2>
+                <h1 class="masthead-heading mb-0" style="text-shadow: 2px 2px 5px #000000">Hotel Booking</h1>
+                <h2 class="mb-0" style="text-shadow: 2px 2px 5px #000000">Το καλύτερο ξενοδοχείο βρίσκεται εδώ</h2>
             </div>
         </div>
-        <div class="bg-circle-1 bg-circle"></div>
-        <div class="bg-circle-2 bg-circle"></div>
-        <div class="bg-circle-3 bg-circle"></div>
-        <div class="bg-circle-4 bg-circle"></div>
+        @*<div class="bg-circle-1 bg-circle"></div>
+            <div class="bg-circle-2 bg-circle"></div>
+            <div class="bg-circle-3 bg-circle"></div>
+            <div class="bg-circle-4 bg-circle"></div>*@
     </header>
+
+    <div class="text-center p-2 mt-2 mb-2" style="background-color: #b2deff">
+        <h3 class="text-light" style="text-shadow: 2px 2px 5px #000000">Καλώς ήρθες ταξιδιώτη</h3>
+        <h5 class="text-light" style="text-shadow: 2px 2px 5px #000000">Βρείτε προσοφορές για ξενοδοχεία στις καλύτερες τιμές</h5>
+    </div>
 
     <div class="container">
         <main role="main" class="pb-3">

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hotel_Booking.Models;
 using Hotel_Booking.Components.Data;
 using Hotel_Booking.Components.Serialization;
+using Hotel_Booking.Components.Enumeration;
 
 namespace Hotel_Booking.Controllers
 {
@@ -22,7 +23,8 @@ namespace Hotel_Booking.Controllers
         /// Basic method in Index
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index(int Page = 1)
+        [HttpGet()]
+        public IActionResult Index(int Page = 1, OrderType OrderBy = 0)
         {
             // Getting Basic Url
             ViewData["Url"] = $"{this.Request.Scheme}://{this.Request.Host}";
