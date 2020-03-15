@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hotel_Booking.Components.Data
 {
@@ -31,7 +28,7 @@ namespace Hotel_Booking.Components.Data
         public static string FetchBookings()
         {
             string mRet = "";
-            using(StreamReader _SR = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "bookings.json")))
+            using (StreamReader _SR = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "bookings.json")))
             {
                 mRet = _SR.ReadToEnd();
                 _SR.Close();
@@ -51,6 +48,22 @@ namespace Hotel_Booking.Components.Data
                 _SW.Write(JsonText);
                 _SW.Close();
             }
+        }
+
+        /// <summary>
+        /// Getting Email Body from Text.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetEmailBody()
+        {
+            string mRet = "";
+            using (StreamReader _SW = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "EmailBody.txt")))
+            {
+                mRet = _SW.ReadToEnd();
+                _SW.ReadToEnd();
+            }
+
+            return mRet;
         }
     }
 }

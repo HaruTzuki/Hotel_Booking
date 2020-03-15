@@ -2,7 +2,6 @@
 using Hotel_Booking.Components.Serialization;
 using Hotel_Booking.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,8 +10,11 @@ namespace Hotel_Booking.ViewComponents
 {
     public class PagenationViewComponent : ViewComponent
     {
+        #region Constructor
         public PagenationViewComponent() { }
+        #endregion
 
+        #region View Component Actions
         public async Task<IViewComponentResult> InvokeAsync()
         {
             List<Hotel> Hotels = new List<Hotel>();
@@ -32,6 +34,7 @@ namespace Hotel_Booking.ViewComponents
             Hotels.ForEach(h => h.AvailableRooms -= Bookings.Where(b => b.HotelOid == h.Oid).Select(b => b.Rooms).Sum());
 
             return View(Hotels.Count());
-        }
+        } 
+        #endregion
     }
 }

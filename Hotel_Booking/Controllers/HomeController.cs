@@ -10,11 +10,14 @@ namespace Hotel_Booking.Controllers
 {
     public class HomeController : Controller
     {
-
+        #region Constructor
         public HomeController()
         {
-        }
 
+        }
+        #endregion
+
+        #region Controller Actions
         /// <summary>
         /// Basic method in Index
         /// </summary>
@@ -42,10 +45,8 @@ namespace Hotel_Booking.Controllers
             // Substraction Available rooms from Bookings.
             Hotels.ForEach(h => h.AvailableRooms -= Bookings.Where(b => b.HotelOid == h.Oid).Select(b => b.Rooms).Sum());
 
-            // var CustomObject =  Hotels.Where(h => h.AvailableRooms > 0).Skip((Page * 5) - 5).Take(5).ToList() 10
-            var CustomObject = new { Hotels = Hotels.Where(h => h.AvailableRooms > 0).Skip((Page * 5) - 5).Take(5).ToList(), HotelCount = Hotels.Count() };
             // Return our view.
-            return View(Hotels.Where(h => h.AvailableRooms > 0).Skip((Page * 5) - 5).Take(5).ToList());
+            return View(Hotels.Where(h => h.AvailableRooms > 0).OrderBy(x => x.Price).Skip((Page * 5) - 5).Take(5).ToList());
         }
 
         /// <summary>
@@ -86,6 +87,7 @@ namespace Hotel_Booking.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        } 
+        #endregion
     }
 }

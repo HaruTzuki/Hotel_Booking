@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Hotel_Booking.Components.Network;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +22,19 @@ namespace Hotel_Booking
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            // EmailClient Configure
+            services.AddScoped<EmailHandler>((serviceProvider) =>
+            {
+                var config = serviceProvider.GetRequiredService<IConfiguration>();
+                return new EmailHandler(
+                    config.GetValue<string>("Email:Smtp:Host"),
+                    config.GetValue<int>("Email:Smtp:Port"),
+                    config.GetValue<bool>("Email:Smtp:Ssl"),
+                    config.GetValue<string>("Email:Smtp:Username"),
+                    config.GetValue<string>("Email:Smtp:Password")
+                );
+            });
 
             // Compile razor pages in running time.
             services.AddRazorPages().AddRazorRuntimeCompilation();

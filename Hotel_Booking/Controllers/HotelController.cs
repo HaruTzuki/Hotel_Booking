@@ -10,6 +10,7 @@ namespace Hotel_Booking.Controllers
 {
     public class HotelController : Controller
     {
+        #region Controller Actions
         public IActionResult Information(Guid Id)
         {
             // Initialize Properties
@@ -20,6 +21,7 @@ namespace Hotel_Booking.Controllers
 
             // Return our view
             return View(Hotel);
-        }
+        } 
+        #endregion
     }
 }
