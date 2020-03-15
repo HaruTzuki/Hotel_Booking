@@ -13,11 +13,21 @@ namespace Hotel_Booking.Controllers
         #region Controller Actions
         public IActionResult Information(Guid Id)
         {
+            // Basic Url
+            ViewData["Url"] = $"{this.Request.Scheme}://{this.Request.Host}/";
             // Initialize Properties
             Hotel Hotel = new Hotel();
-
+            List<Booking> Bookings = new List<Booking>();
             // Get Values from db
             Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x => x.Oid == Id).FirstOrDefault();
+            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings()).Where(x => x.HotelOid == Id).ToList();
+
+            // Check if our object is null after db call
+            if (Bookings is null)
+                Bookings = new List<Booking>();
+
+            // Subtraction available rooms
+            Hotel.AvailableRooms -= Bookings.Select(x => x.Rooms).Sum();
 
             // Return our view
             return View(Hotel);

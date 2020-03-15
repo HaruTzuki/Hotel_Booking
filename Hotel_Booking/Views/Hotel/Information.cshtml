@@ -3,3 +3,55 @@
 }
 @model Hotel
 
+<div class="card m-2">
+    <div class="card-body">
+        <div class="row m-2">
+            <div class="col-sm-12">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary"><i class='bx bx-arrow-back bx-tada-hover'></i> Πίσω</a>
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col-sm-5">
+                <a href="@(ViewData["Url"] + "/" + Model.Image)" data-lightbox="@Model.Name" data-title="@Model.Name"><img src="@(ViewData["Url"] + Model.Image)" alt="@Model.Name" class="w-100" /></a>
+            </div>
+            <div class="col-sm-7">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Basic Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="false">Description</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row m-2">
+                            <div class="col-sm-12">
+                                <h2>@Model.Name</h2>
+                                <h5><i class='bx bxs-map bx-tada-hover'></i> @Model.Address</h5>
+                                <hr />
+                                <p><span class="font-weight-bold">Τιμή: </span> @Model.Price € / Νύχτα</p>
+                                <p><span class="font-weight-bold">Διαθέσιμα Δωμάτια: </span> @Model.AvailableRooms</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="row m-2">
+                            <div class="col-sm-12">
+                                <h4>Λίγα λόγια για το ξενοδοχείο:</h4>
+                                <hr />
+                                <p>@Model.Description</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <a asp-controller="Booking" asp-action="Order"  asp-route-id="@Model.Oid" class="btn btn-info"><i class='bx bx-window-open bx-tada-hover'></i> Κάνε Κράτηση</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

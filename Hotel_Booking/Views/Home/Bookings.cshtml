@@ -17,27 +17,28 @@
                                 <input type="hidden" value="@booking.Oid" name="BookingId"/>
                             </div>
                             <div class="col-sm-4 d-flex justify-content-end">
-                                <button class="btn btn-danger" type="submit">Διαγραφή</button>
+                                <button class="btn btn-danger" type="submit"><i class='bx bxs-minus-circle bx-tada-hover'></i> Διαγραφή</button>
                             </div>
                         </div>
                         <hr />
                         <div class="row">
                             <div class="col-sm-12">
                                 <h6>Πληροφορίες ξενοδοχείου</h6>
+                                <hr />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-3">
-                                <img src="@string.Format("{0}",  ViewData["Url"] + "/" + booking.Hotel.Image)" alt="@booking.Hotel.Name" class="w-100" />
-                            </div>
+                                <a href="@(ViewData["Url"] + "/" + booking.Hotel.Image)" data-lightbox="@booking.Hotel.Name" data-title="@booking.Hotel.Name"><img src="@string.Format("{0}",  ViewData["Url"] + "/" + booking.Hotel.Image)" alt="@booking.Hotel.Name" class="w-100" /> </a>
+</div>
                             <div class="col-sm-3">
                                 <h5>@booking.Hotel.Name</h5>
-                                <h6>@booking.Hotel.Address</h6>
+                                <h6><i class='bx bxs-map bx-tada-hover'></i> @booking.Hotel.Address</h6>
                             </div>
                             <div class="col-sm-3">
-                                <p><span class="font-weight-bold">Από ημ/νία :</span> @booking.FromDate.ToString("dd-MM-yyyy")</p>
-                                <p><span class="font-weight-bold">Έως ημ/νία :</span> @booking.ToDate.ToString("dd-MM-yyyy")</p>
-                                <p><span class="font-weight-bold">Δωμάτια :</span> @booking.Rooms | @booking.Hotel.Price € / Νύχτα</p>
+                                <p><i class='bx bx-calendar bx-tada-hover'></i> <span class="font-weight-bold">Ημ/νία Άφιξης :</span> @booking.FromDate.ToString("dd-MM-yyyy")</p>
+                                <p><i class='bx bx-calendar bx-tada-hover'></i> <span class="font-weight-bold">Ημ/νία Αναχώρησης :</span> @booking.ToDate.ToString("dd-MM-yyyy")</p>
+                                <p><i class='bx bxs-door-open bx-tada-hover'></i> <span class="font-weight-bold">Δωμάτια :</span> @booking.Rooms | @booking.Hotel.Price € / Νύχτα</p>
                             </div>
                             <div class="col-sm-3">
                                 <h5>Συνολικό Κόστος</h5>
@@ -48,6 +49,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <h6>Πληροφορίες Πελάτη</h6>
+                                <hr />
                             </div>
                         </div>
                         <div class="row">

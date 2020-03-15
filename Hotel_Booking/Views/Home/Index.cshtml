@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <div>
-                        <img src="@string.Format("{0}",ViewData["Url"] + "/" + Hotel.Image)" alt="@Hotel.Name" style="max-width: 100%" />
+                        <a href="@(ViewData["Url"] + "/" + Hotel.Image)" data-lightbox="@Hotel.Name" data-title="@Hotel.Name"><img src="@string.Format("{0}",ViewData["Url"] + "/" + Hotel.Image)" alt="@Hotel.Name" style="max-width: 100%" /></a>
                     </div>
                 </div>
                 <div class="col-sm-7">
@@ -24,7 +24,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <p>@Hotel.Address</p>
+                                    <p><i class='bx bxs-map bx-tada-hover'></i> @Hotel.Address</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -38,14 +38,20 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <span class="font-weight-bold">Διαθέσιμα Δωμάτια: </span> @Hotel.AvailableRooms
+                                    <p><span class="font-weight-bold">Διαθέσιμα Δωμάτια: </span> @Hotel.AvailableRooms</p>
+                                    <a asp-controller="Hotel" asp-action="Information" asp-route-id="@Hotel.Oid" class="btn btn-info text-light"><i class='bx bxs-info-circle bx-tada-hover'></i> Πληροφορίες</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-3 d-flex flex-column align-items-end justify-content-end">
                             <span>Τιμή: </span>
                             <h1>@Hotel.Price€</h1>
-                            <a asp-controller="Booking" asp-action="Order" asp-route-id="@Hotel.Oid" class="btn btn-info text-light">Κάνε Κράτηση</a>
+                            <div class="row">
+                                <div class="col-sm-12 w-100 d-flex justify-content-around">
+                                    <a asp-controller="Booking" asp-action="Order" asp-route-id="@Hotel.Oid" class="btn btn-info text-light"><i class='bx bx-window-open bx-tada-hover'></i> Κάνε Κράτηση</a>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
