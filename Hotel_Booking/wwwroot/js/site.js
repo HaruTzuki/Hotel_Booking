@@ -4,36 +4,63 @@
 // Write your JavaScript code.
 "use strict";
 
-$(document).ready(function () {
-    
-});
-
-$("#FromDate").change(function () {
-    console.log($(this).val());
-    CalculateCost();
-});
-
-$("#ToDate").change(function () {
-    console.log($(this).val());
-    CalculateCost();
-});
-
+// Rooms control event.
 $("#Rooms").change(function () {
     console.log($(this).val());
     CalculateCost();
 });
 
+// Datetime Pickers
+
+// Arrival date picker
+$("#arrival-date").datepicker({
+    altField: "#FromDate",
+    altFormat: "yy-mm-dd",
+    onSelect: function () {
+        CalculateCost();
+    }
+});
+
+// Departure date picker
+$("#departure-date").datepicker({
+    altField: "#ToDate",
+    altFormat: "yy-mm-dd",
+    defaultDate: +1,
+    onSelect: function () {
+        CalculateCost();
+    }
+});
+
+// Form submit validation
+$("#btn-complete-booking").click(function (event) {
+    let FromDate = Date.parse($("#FromDate").val());
+    let ToDate = Date.parse($("#ToDate").val());
+
+    if (FromDate > ToDate) {
+        alert("Η Ημ/νία Άφιξης δεν μπορεί να είναι μεγαλύτερη από την Ημ/νία Αναχώρησης.");
+        event.preventDefault();
+    }
+
+    if (FromDate === ToDate) {
+        alert("Η Ημ/νία Άφιξης και Ημ/νία Αναχώρησης δεν μπορεί να είναι ίδιες.");
+        event.preventDefault();
+    }
+});
+
+// Functions
+
+// Calculate cost of booking.
 function CalculateCost() {
-    let FromDate = new Date($("#FromDate").val());
-    let ToDate = new Date($("#ToDate").val());
+    let FromDate = Date.parse($("#FromDate").val());
+    let ToDate = Date.parse($("#ToDate").val());
     let Rooms = $("#Rooms").val();
     let CostPerNight = $("#HotelPrice").text();
 
     let DiffTime = Math.abs(ToDate - FromDate);
     let DiffDays = Math.ceil(DiffTime / (1000 * 60 * 60 * 24));
-    console.log(CostPerNight + " " + DiffDays);
-    // TODO Conditions
-
+    
     $("#Cost").html((Math.round(CostPerNight * DiffDays * Rooms * 100) / 100).toFixed(2) + "€");
 }
+
+
 
