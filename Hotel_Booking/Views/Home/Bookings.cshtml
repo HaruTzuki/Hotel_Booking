@@ -17,7 +17,7 @@
                                 <input type="hidden" value="@booking.Oid" name="BookingId"/>
                             </div>
                             <div class="col-sm-4 d-flex justify-content-end">
-                                <button class="btn btn-danger" id="btn-booking-delete" type="submit"><i class='bx bxs-minus-circle bx-tada-hover'></i> Διαγραφή</button>
+                                <button class="btn btn-danger btn-booking-delete" type="submit"><i class='bx bxs-minus-circle bx-tada-hover'></i> Διαγραφή</button>
                             </div>
                         </div>
                         <hr />
@@ -30,7 +30,7 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <a href="@(ViewData["Url"] + "/" + booking.Hotel.Image)" data-lightbox="@booking.Hotel.Name" data-title="@booking.Hotel.Name"><img src="@string.Format("{0}",  ViewData["Url"] + "/" + booking.Hotel.Image)" alt="@booking.Hotel.Name" class="w-100" /> </a>
-</div>
+                            </div>
                             <div class="col-sm-3">
                                 <h5>@booking.Hotel.Name</h5>
                                 <h6><i class='bx bxs-map bx-tada-hover'></i> @booking.Hotel.Address</h6>
