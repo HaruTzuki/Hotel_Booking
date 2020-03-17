@@ -27,7 +27,7 @@ namespace Hotel_Booking.Controllers
         public IActionResult Index(int Page = 1, OrderType OrderBy = 0)
         {
             // Getting Basic Url
-            ViewData["Url"] = $"{this.Request.Scheme}://{this.Request.Host}";
+            GetBasicUrl();
 
             // Initialize Properties
             List<Hotel> Hotels = new List<Hotel>();
@@ -67,7 +67,7 @@ namespace Hotel_Booking.Controllers
         public IActionResult Bookings()
         {
             // Getting Basic Url
-            ViewData["Url"] = $"{this.Request.Scheme}://{this.Request.Host}";
+            GetBasicUrl();
 
             // Initialize Properties
             List<Booking> Bookings = new List<Booking>();
@@ -89,7 +89,17 @@ namespace Hotel_Booking.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        } 
+        }
+        #endregion
+
+        #region Custom Methods
+        /// <summary>
+        /// Getting Basic Url
+        /// </summary>
+        private void GetBasicUrl()
+        {
+            ViewData["Url"] = $"{this.Request.Scheme}://{this.Request.Host}";
+        }
         #endregion
     }
 }

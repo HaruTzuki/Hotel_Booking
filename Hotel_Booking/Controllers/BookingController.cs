@@ -34,7 +34,7 @@ namespace Hotel_Booking.Controllers
         public IActionResult Order(Guid Id)
         {
             // Basic Url
-            ViewData["Url"] = HostUrl = $"{this.Request.Scheme}://{this.Request.Host}";
+            GetBasicUrl();
 
             // Initialize Properties
             Hotel Hotel = new Hotel();
@@ -56,6 +56,7 @@ namespace Hotel_Booking.Controllers
             return View(Hotel);
         }
 
+
         /// <summary>
         /// Post method to Complete Booking.
         /// </summary>
@@ -65,7 +66,7 @@ namespace Hotel_Booking.Controllers
         public IActionResult CompleteOrder(Booking Booking)
         {
             // Basic Url
-            HostUrl = $"{this.Request.Scheme}://{this.Request.Host}";
+            GetBasicUrl();
 
             // Initialize Properties
             List<Booking> Bookings = new List<Booking>();
@@ -146,7 +147,15 @@ namespace Hotel_Booking.Controllers
 
             // Send Email
             this.EmailHandler.SendEMail("info@hotelbooking.com", "Hotel Booking", Booking.User.Email, EmailBody, true, "Successfully booking placed");
-        } 
+        }
+
+        /// <summary>
+        /// Getting Basic Url
+        /// </summary>
+        private void GetBasicUrl()
+        {
+            ViewData["Url"] = HostUrl = $"{this.Request.Scheme}://{this.Request.Host}";
+        }
         #endregion
 
 
