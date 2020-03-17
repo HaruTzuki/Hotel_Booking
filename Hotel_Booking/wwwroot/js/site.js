@@ -47,6 +47,15 @@ $("#btn-complete-booking").click(function (event) {
     }
 });
 
+// Delete booking
+$("#btn-booking-delete").click(function (event) {
+    let Message = confirm("Θέλετε να διαγράψετε την κράτηση;");
+
+    if (!Message) {
+        event.preventDefault();
+    }
+});
+
 // Functions
 
 // Calculate cost of booking.
