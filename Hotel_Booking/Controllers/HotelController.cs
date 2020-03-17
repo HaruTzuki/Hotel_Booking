@@ -20,14 +20,14 @@ namespace Hotel_Booking.Controllers
             List<Booking> Bookings = new List<Booking>();
             // Get Values from db
             Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x => x.Oid == Id).FirstOrDefault();
-            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings()).Where(x => x.HotelOid == Id).ToList();
+            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
 
             // Check if our object is null after db call
             if (Bookings is null)
                 Bookings = new List<Booking>();
 
             // Subtraction available rooms
-            Hotel.AvailableRooms -= Bookings.Select(x => x.Rooms).Sum();
+            Hotel.AvailableRooms -= Bookings.Where(x => x.HotelOid == Id).Select(x => x.Rooms).Sum();
 
             // Return our view
             return View(Hotel);
