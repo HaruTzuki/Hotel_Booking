@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Hotel_Booking.Components.Data;
+using Hotel_Booking.Components.Logger;
 using Hotel_Booking.Components.Network;
 using Hotel_Booking.Components.Serialization;
 using Hotel_Booking.Models;
@@ -15,6 +16,7 @@ namespace Hotel_Booking.Controllers
 
         #region Properties
         private EmailHandler EmailHandler;
+        private LoggerHandler LoggerHandler;
         private string HostUrl = string.Empty;
         #endregion
 
@@ -22,6 +24,7 @@ namespace Hotel_Booking.Controllers
         public BookingController(EmailHandler EmailHandler)
         {
             this.EmailHandler = EmailHandler;
+            this.LoggerHandler = new LoggerHandler();
         } 
         #endregion
 
@@ -40,17 +43,29 @@ namespace Hotel_Booking.Controllers
             Hotel Hotel = new Hotel();
             List<Booking> Bookings = new List<Booking>();
 
-            // Get values from DB
-            Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x => x.Oid == Id).FirstOrDefault();
+            try
+            {
+                // Get values from DB
+                Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x => x.Oid == Id).FirstOrDefault();
 
-            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
+                Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
 
-            // Check if our object is null after db call
-            if (Bookings is null)
-                Bookings = new List<Booking>();
+                // Check if our object is null after db call
+                if (Bookings is null)
+                    Bookings = new List<Booking>();
 
-            // Subtraction available rooms
-            Hotel.AvailableRooms -= Bookings.Where(x => x.HotelOid == Id).Select(x => x.Rooms).Sum();
+                // Subtraction available rooms
+                Hotel.AvailableRooms -= Bookings.Where(x => x.HotelOid == Id).Select(x => x.Rooms).Sum();
+            }
+            catch (Exception ex)
+            {
+                this.LoggerHandler.WriteLog(ex.Message, Components.Enumeration.LogType.Error, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+            finally
+            {
+                if (Hotel is null)
+                    Hotel = new Hotel();
+            }
 
             // Return our view.
             return View(Hotel);
@@ -71,19 +86,26 @@ namespace Hotel_Booking.Controllers
             // Initialize Properties
             List<Booking> Bookings = new List<Booking>();
 
-            // Get values from db
-            Booking.Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x => x.Oid == Booking.HotelOid).FirstOrDefault();
-            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
+            try
+            {
+                // Get values from db
+                Booking.Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(x => x.Oid == Booking.HotelOid).FirstOrDefault();
+                Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
 
-            // Check if object is null
-            if (Bookings is null)
-                Bookings = new List<Booking>();
+                // Check if object is null
+                if (Bookings is null)
+                    Bookings = new List<Booking>();
 
-            // Add booking object to list.
-            Bookings.Add(Booking);
+                // Add booking object to list.
+                Bookings.Add(Booking);
 
-            // Commit changes in db.
-            Database.CommitBookings(JsonSerialize.JsonObjectSerialize(Bookings));
+                // Commit changes in db.
+                Database.CommitBookings(JsonSerialize.JsonObjectSerialize(Bookings));
+            }
+            catch (Exception ex)
+            {
+                this.LoggerHandler.WriteLog(ex.Message, Components.Enumeration.LogType.Error, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
 
             // Send Confirmation E-Mail
             Task EmailTask = new Task(() => EmailBookingConfirmation(Booking));
@@ -104,14 +126,21 @@ namespace Hotel_Booking.Controllers
             // Initialize Properties
             List<Booking> Bookings = new List<Booking>();
 
-            // Get values from db
-            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
+            try
+            {
+                // Get values from db
+                Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
 
-            // Find and remove object based on booking id
-            Bookings.Remove(Bookings.Where(x => x.Oid == BookingId).FirstOrDefault());
+                // Find and remove object based on booking id
+                Bookings.Remove(Bookings.Where(x => x.Oid == BookingId).FirstOrDefault());
 
-            // Commit changes in db
-            Database.CommitBookings(JsonSerialize.JsonObjectSerialize(Bookings));
+                // Commit changes in db
+                Database.CommitBookings(JsonSerialize.JsonObjectSerialize(Bookings));
+            }
+            catch (Exception ex)
+            {
+                this.LoggerHandler.WriteLog(ex.Message, Components.Enumeration.LogType.Error, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
 
             // Return again same page.
             return RedirectToAction("Bookings", "Home");
@@ -145,8 +174,15 @@ namespace Hotel_Booking.Controllers
                 .Replace("@Url", HostUrl)
                 ;
 
-            // Send Email
-            this.EmailHandler.SendEMail("info@hotelbooking.com", "Hotel Booking", Booking.User.Email, EmailBody, true, "Successfully booking placed");
+            try
+            {
+                // Send Email
+                this.EmailHandler.SendEMail("info@hotelbooking.com", "Hotel Booking", Booking.User.Email, EmailBody, true, "Successfully booking placed");
+            }
+            catch (Exception ex)
+            {
+                this.LoggerHandler.WriteLog(ex.Message, Components.Enumeration.LogType.Error, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
 
         /// <summary>

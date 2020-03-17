@@ -39,14 +39,21 @@ namespace Hotel_Booking.Components.Network
         /// <param name="Subject">Subject of email</param>
         public void SendEMail(string From, string DisplayName, string To, string Body, bool IsHtml, string Subject)
         {
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress(From, DisplayName, Encoding.UTF8);
-            mailMessage.To.Add(To);
-            mailMessage.Body = Body;
-            mailMessage.BodyEncoding = Encoding.UTF8;
-            mailMessage.IsBodyHtml = IsHtml;
-            mailMessage.Subject = Subject;
-            Client.Send(mailMessage);
+            try
+            {
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(From, DisplayName, Encoding.UTF8);
+                mailMessage.To.Add(To);
+                mailMessage.Body = Body;
+                mailMessage.BodyEncoding = Encoding.UTF8;
+                mailMessage.IsBodyHtml = IsHtml;
+                mailMessage.Subject = Subject;
+                Client.Send(mailMessage);
+            }
+            catch (System.Exception ex)
+            {
+                throw new System.Exception(ex.Message);
+            }
         }
     }
 }

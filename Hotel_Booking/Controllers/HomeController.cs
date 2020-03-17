@@ -6,15 +6,20 @@ using Hotel_Booking.Models;
 using Hotel_Booking.Components.Data;
 using Hotel_Booking.Components.Serialization;
 using Hotel_Booking.Components.Enumeration;
+using Hotel_Booking.Components.Logger;
 
 namespace Hotel_Booking.Controllers
 {
     public class HomeController : Controller
     {
+        #region Properties
+        LoggerHandler LoggerHandler;
+        #endregion
+
         #region Constructor
         public HomeController()
         {
-
+            this.LoggerHandler = new LoggerHandler();
         }
         #endregion
 
@@ -33,19 +38,31 @@ namespace Hotel_Booking.Controllers
             List<Hotel> Hotels = new List<Hotel>();
             List<Booking> Bookings = new List<Booking>();
 
-            // Get Values from DB.
-            Hotels = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch());
-            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
+            try
+            {
+                // Get Values from DB.
+                Hotels = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch());
+                Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
 
-            // Checking if object is null.
-            if (Hotels is null)
-                Hotels = new List<Hotel>();
+                // Checking if object is null.
+                if (Hotels is null)
+                    Hotels = new List<Hotel>();
 
-            if (Bookings is null)
-                Bookings = new List<Booking>();
+                if (Bookings is null)
+                    Bookings = new List<Booking>();
 
-            // Substraction Available rooms from Bookings.
-            Hotels.ForEach(h => h.AvailableRooms -= Bookings.Where(b => b.HotelOid == h.Oid).Select(b => b.Rooms).Sum());
+                // Substraction Available rooms from Bookings.
+                Hotels.ForEach(h => h.AvailableRooms -= Bookings.Where(b => b.HotelOid == h.Oid).Select(b => b.Rooms).Sum());
+            }
+            catch (System.Exception ex)
+            {
+                this.LoggerHandler.WriteLog(ex.Message, Components.Enumeration.LogType.Error, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+            finally
+            {
+                if (Hotels is null)
+                    Hotels = new List<Hotel>();
+            }
 
             // Return our view.
             return View(Hotels.Where(h => h.AvailableRooms > 0).OrderBy(x => x.Price).Skip((Page * 5) - 5).Take(5).ToList());
@@ -72,14 +89,27 @@ namespace Hotel_Booking.Controllers
             // Initialize Properties
             List<Booking> Bookings = new List<Booking>();
 
-            // Get values from DB.
-            Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
+            try
+            {
+                // Get values from DB.
+                Bookings = JsonSerialize.JsonObjectDeserialize<List<Booking>>(Database.FetchBookings());
 
-            if (Bookings is null)
-                Bookings = new List<Booking>();
+                if (Bookings is null)
+                    Bookings = new List<Booking>();
 
-            // Initialize Hotel Object in each of the Booking Object.
-            Bookings.ForEach(x => x.Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(y => y.Oid == x.HotelOid).FirstOrDefault());
+                // Initialize Hotel Object in each of the Booking Object.
+                Bookings.ForEach(x => x.Hotel = JsonSerialize.JsonObjectDeserialize<List<Hotel>>(Database.Fetch()).Where(y => y.Oid == x.HotelOid).FirstOrDefault());
+
+            }
+            catch (System.Exception ex)
+            {
+                this.LoggerHandler.WriteLog(ex.Message, Components.Enumeration.LogType.Error, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+            finally
+            {
+                if (Bookings is null)
+                    Bookings = new List<Booking>();
+            }
 
             // Return our view.
             return View(Bookings);

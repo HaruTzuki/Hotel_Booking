@@ -12,10 +12,17 @@ namespace Hotel_Booking.Components.Data
         public static string Fetch()
         {
             string mRet = "";
-            using (StreamReader _SR = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "hotel_db.json")))
+            try
             {
-                mRet = _SR.ReadToEnd();
-                _SR.Close();
+                using (StreamReader _SR = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "hotel_db.json")))
+                {
+                    mRet = _SR.ReadToEnd();
+                    _SR.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
 
             return mRet;
@@ -28,10 +35,17 @@ namespace Hotel_Booking.Components.Data
         public static string FetchBookings()
         {
             string mRet = "";
-            using (StreamReader _SR = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "bookings.json")))
+            try
             {
-                mRet = _SR.ReadToEnd();
-                _SR.Close();
+                using (StreamReader _SR = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "bookings.json")))
+                {
+                    mRet = _SR.ReadToEnd();
+                    _SR.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
 
             return mRet;
@@ -43,10 +57,17 @@ namespace Hotel_Booking.Components.Data
         /// <param name="JsonText"></param>
         public static void CommitBookings(string JsonText)
         {
-            using (StreamWriter _SW = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "bookings.json")))
+            try
             {
-                _SW.Write(JsonText);
-                _SW.Close();
+                using (StreamWriter _SW = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "bookings.json")))
+                {
+                    _SW.Write(JsonText);
+                    _SW.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
@@ -57,10 +78,17 @@ namespace Hotel_Booking.Components.Data
         public static string GetEmailBody()
         {
             string mRet = "";
-            using (StreamReader _SW = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "EmailBody.txt")))
+            try
             {
-                mRet = _SW.ReadToEnd();
-                _SW.ReadToEnd();
+                using (StreamReader _SW = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Context", "EmailBody.txt")))
+                {
+                    mRet = _SW.ReadToEnd();
+                    _SW.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
 
             return mRet;
