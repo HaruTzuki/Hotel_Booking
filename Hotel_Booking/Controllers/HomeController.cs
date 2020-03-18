@@ -29,7 +29,7 @@ namespace Hotel_Booking.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet()]
-        public IActionResult Index(int Page = 1, OrderType OrderBy = 0)
+        public IActionResult Index(int Page = 1)
         {
             // Getting Basic Url
             GetBasicUrl();
