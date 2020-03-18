@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Booking Completed";
+}
+@model Booking
+    <div class="row">
+        <div class="col-sm-12 d-flex justify-content-center">
+            <img src="~/content/img/booking_complete.png" alt="booking_complete"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <p>Thanks very much for your booking Mr / Ms <span class="font-weight-bold">@Model.User.LastName</span></p>
+            <p>Your booking ID is: <span class="font-weight-bold">@Model.Oid</span></p>
+            <p>In your e-mail (<span class="font-weight-bold">@Model.User.Email</span>) you will find more information about your booking</p>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-info">Back to Browse</a>
+                </div>
+            </div>
+        </div>
+    </div>

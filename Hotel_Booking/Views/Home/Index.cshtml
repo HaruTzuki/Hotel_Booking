@@ -1,8 +1,65 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model List<Hotel>
+ 
+@foreach(var Hotel in Model)
+{
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+    <div class="card m-2">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-5">
+                    <div>
+                        <a href="@(ViewData["Url"] + "/" + Hotel.Image)" data-lightbox="@Hotel.Name" data-title="@Hotel.Name"><img src="@string.Format("{0}",ViewData["Url"] + "/" + Hotel.Image)" alt="@Hotel.Name" style="max-width: 100%" /></a>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="row row-custom">
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h2>@Hotel.Name</h2>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p><i class='bx bxs-map bx-tada-hover'></i> @Hotel.Address</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Περιγραφή:</h4>
+                                    @if(Hotel.Description.Length > 0)
+                                    {
+                                        <p ><a asp-controller="Hotel" asp-action="Information" asp-route-id="@Hotel.Oid" class="text-dark">@Hotel.Description.Substring(0, 100) <span class="text-primary font-italic">Περισσότερα...</span> </a></p>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p><span class="font-weight-bold">Διαθέσιμα Δωμάτια: </span> @Hotel.AvailableRooms</p>
+                                    <a asp-controller="Hotel" asp-action="Information" asp-route-id="@Hotel.Oid" class="btn btn-info text-light"><i class='bx bxs-info-circle bx-tada-hover'></i> Πληροφορίες</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 d-flex flex-column align-items-end justify-content-end">
+                            <span>Τιμή: </span>
+                            <h1>@Hotel.Price€</h1>
+                            <div class="row">
+                                <div class="col-sm-12 w-100 d-flex justify-content-around">
+                                    <a asp-controller="Booking" asp-action="Order" asp-route-id="@Hotel.Oid" class="btn btn-info text-light"><i class='bx bx-window-open bx-tada-hover'></i> Κάνε Κράτηση</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@await Component.InvokeAsync("Pagenation")

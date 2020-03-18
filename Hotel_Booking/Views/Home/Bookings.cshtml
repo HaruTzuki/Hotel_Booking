@@ -1,0 +1,73 @@
+﻿@{ 
+    ViewData["Title"] = "Bookings";
+}
+@model List<Booking>
+
+
+@foreach(Booking booking in Model)
+{
+    <form asp-controller="Booking" asp-action="DeleteBooking" method="post">
+        <div class="card m-2">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <span class="font-weight-bold mr-2">Booking ID :</span> <span class="text-wrap">@booking.Oid</span>
+                                <input type="hidden" value="@booking.Oid" name="BookingId"/>
+                            </div>
+                            <div class="col-sm-4 d-flex justify-content-end">
+                                <button class="btn btn-danger btn-booking-delete" type="submit"><i class='bx bxs-minus-circle bx-tada-hover'></i> Διαγραφή</button>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h6>Πληροφορίες ξενοδοχείου</h6>
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <a href="@(ViewData["Url"] + "/" + booking.Hotel.Image)" data-lightbox="@booking.Hotel.Name" data-title="@booking.Hotel.Name"><img src="@string.Format("{0}",  ViewData["Url"] + "/" + booking.Hotel.Image)" alt="@booking.Hotel.Name" class="w-100" /> </a>
+                            </div>
+                            <div class="col-sm-3">
+                                <h5>@booking.Hotel.Name</h5>
+                                <h6><i class='bx bxs-map bx-tada-hover'></i> @booking.Hotel.Address</h6>
+                            </div>
+                            <div class="col-sm-3">
+                                <p><i class='bx bx-calendar bx-tada-hover'></i> <span class="font-weight-bold">Ημ/νία Άφιξης :</span> @booking.FromDate.ToString("dd-MM-yyyy")</p>
+                                <p><i class='bx bx-calendar bx-tada-hover'></i> <span class="font-weight-bold">Ημ/νία Αναχώρησης :</span> @booking.ToDate.ToString("dd-MM-yyyy")</p>
+                                <p><i class='bx bxs-door-open bx-tada-hover'></i> <span class="font-weight-bold">Δωμάτια :</span> @booking.Rooms | @booking.Hotel.Price € / Νύχτα</p>
+                            </div>
+                            <div class="col-sm-3">
+                                <h5>Συνολικό Κόστος</h5>
+                                <h5>@booking.BookingCost €</h5>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h6>Πληροφορίες Πελάτη</h6>
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p><span class="font-weight-bold">Όνομα: </span> @booking.User.FirstName</p>
+                                <p><span class="font-weight-bold">Επώνυμο: </span> @booking.User.LastName</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p><span class="font-weight-bold">Διεύθυνση: </span> @booking.User.Address</p>
+                                <p><span class="font-weight-bold">E-Mail: </span> @booking.User.Email</p>
+                                <p><span class="font-weight-bold">Τηλέφωνο: </span> @booking.User.Phone</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    
+}

@@ -1,0 +1,90 @@
+﻿@{
+	ViewData["Title"] = "Booking";
+}
+@model Hotel
+	<form asp-controller="Booking" asp-action="CompleteOrder" method="post">
+		<div class="card m-2">
+			<div class="card-body">
+				<h2>Έχετε επιλέξει:</h2>
+				<hr />
+				<div class="row">
+					<div class="col-sm-5">
+						<a href="@(ViewData["Url"] + "/" + Model.Image)" data-lightbox="@Model.Name" data-title="@Model.Name"><img src=" @(ViewData["Url"] + "/" + Model.Image)" alt="@Model.Name" class="w-100 rounded" /></a>
+						<hr />
+                        <input type="hidden" value="@Model.Oid" name="Booking.HotelOid" id="HotelOid"/>
+						<h4>@Model.Name</h4>
+						<h6><i class='bx bxs-map bx-tada-hover'></i> @Model.Address</h6>
+                        <h6><span id="HotelPrice">@Model.Price</span>€ / Νύχτα</h6>
+						
+					</div>
+					<div class="col-sm-7">
+						<div class="row">
+							<div class="col-sm-6">
+                                <div class="form-group">
+									<label for="FromDate"><i class='bx bx-calendar bx-tada-hover'></i> Άφιξη:</label>
+									<div id="arrival-date"></div>
+									<input type="hidden" name="Booking.FromDate" id="FromDate" class="form-control" />
+								</div>
+							</div>
+							<div class="col-sm-6">
+                                <div class="form-group">
+									<label for="ToDate"><i class='bx bx-calendar bx-tada-hover'></i> Αναχώρηση:</label>
+									<div id="departure-date"></div>
+									<input type="hidden" name="Booking.ToDate" id="ToDate" class="form-control" />
+								</div>
+							</div>
+						</div>
+                        <div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label for="Rooms"><i class='bx bxs-door-open bx-tada-hover'></i> Δωμάτια:</label>
+									<input type="number" min="1" max="@Model.AvailableRooms" name="Booking.Rooms" id="Rooms" class="form-control" value="1" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-12">
+						<hr />
+						<h2>Τα στοιχεία σας:</h2>
+						<hr />
+						<div class="form-group">
+							<label for="FirstName">Όνομα: <span class="text-danger">*</span></label>
+							<input type="text" name="Booking.User.FirstName" id="FirstName" placeholder="Your First Name..." class="form-control" required />
+						</div>
+						<div class="form-group">
+							<label for="LastName">Επώνυμο: <span class="text-danger">*</span></label>
+							<input type="text" name="Booking.User.LastName" id="LastName" placeholder="Your Last Name..." class="form-control" required />
+						</div>
+						<div class="form-group">
+							<label for="Address">Διεύθυνση:</label>
+							<input type="text" name="Booking.User.Address" id="Address" placeholder="Your Address..." class="form-control" />
+						</div>
+						<div class="form-group">
+							<label for="Email">Ηλ. Διεύθυνση: <span class="text-danger">*</span></label>
+							<input type="email" name="Booking.User.Email" id="Email" placeholder="Your E-Mail Address..." class="form-control" required />
+						</div>
+						<div class="form-group">
+							<label for="Phone">Τηλέφωνο:</label>
+							<input type="text" name="Booking.User.Phone" id="Phone" placeholder="Your Phone..." class="form-control" />
+						</div>
+						<div class="d-flex justify-content-end align-items-center">
+							<span class="mr-2">Τελική Τιμή:</span>
+							<h4 id="Cost">@(string.Format("{0:N2}", Model.Price)) €</h4>
+						</div>
+						<hr />
+						<div class="d-flex justify-content-end mb-1">
+							<button class="btn btn-info mr-1" type="submit" id="btn-complete-booking">Ολοκλήρωση Κράτησης</button>
+							<a asp-controller="Home" asp-action="Index" class="btn btn-danger mr-1">Ακύρωση</a>
+						</div>
+					</div>
+					
+				</div>
+
+
+			</div>
+		</div>
+	</form>
+	
