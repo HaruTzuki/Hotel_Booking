@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Hotel_Booking.Components.Logger
 {
+    /// <summary>
+    /// Log Handler Class
+    /// </summary>
     public class LoggerHandler
     {
         private string _ID = Security.Crypt.GenerateSHA256(DateTime.Now.ToString());
@@ -90,12 +93,20 @@ namespace Hotel_Booking.Components.Logger
             }
         }
 
-
+        /// <summary>
+        /// Simple Constructor
+        /// </summary>
         public LoggerHandler()
         {
             
         }
 
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="LogType"></param>
+        /// <param name="CalledMethod"></param>
         public LoggerHandler(string Message, LogType LogType, string CalledMethod)
         {
             this.Message = Message;
@@ -103,11 +114,20 @@ namespace Hotel_Booking.Components.Logger
             this.CalledMethod = CalledMethod;
         }
 
+        /// <summary>
+        /// Write to log file.
+        /// </summary>
         public void WriteLog()
         {
             FlushData();
         }
 
+        /// <summary>
+        /// Write to log file.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="LogType"></param>
+        /// <param name="CalledMethod"></param>
         public void WriteLog(string Message, LogType LogType, string CalledMethod)
         {
             this.Message = Message;
@@ -116,6 +136,9 @@ namespace Hotel_Booking.Components.Logger
             FlushData();
         }
 
+        /// <summary>
+        /// Flushing data to file.
+        /// </summary>
         private void FlushData()
         {
             // Initialize Object
